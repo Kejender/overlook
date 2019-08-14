@@ -142,7 +142,7 @@ palo(){
   let mittari = this.state.mittari;
   let uuni = this.state.uuni;
 
-  //console.log(window.screen.orientation);
+  console.log(window.screen.orientation);
 
   kierros = kierros+1;
   this.setState({ kierros });
@@ -247,7 +247,7 @@ componentDidMount() {
   
     if (window.screen.orientation.type === "landscape-primary"){
       console.log("land");
-      uuni.style.width  = '646px';
+      uuni.style.width  = '600px';
     }
 
     if (window.screen.orientation.type === "portrait-primary"){
