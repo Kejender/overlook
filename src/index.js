@@ -243,6 +243,15 @@ componentDidMount() {
   this.intervalId1 = setInterval(this.tuli.bind(this), 300);
   this.intervalId2 = setInterval(this.palo.bind(this), 10000);
 
+  if ((window.screen.orientation.type === "landscape-primary") && window.screen.width > 599){
+    console.log("ISO");
+  }
+  else{
+    console.log("PIENI");
+  }
+
+  alert(window.screen.height);
+
   window.screen.orientation.onchange = function(e) {
   
     if (window.screen.orientation.type === "landscape-primary"){
@@ -256,6 +265,9 @@ componentDidMount() {
     }
 
     console.log("orientationchange");
+
+    console.log("WH "+window.screen.width+" "+window.screen.height);
+    alert(window.screen.height);
   }
 
 }
