@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Mittari(props) {
+const Mittari = (props) => {
   return (
     <div id="wrap">
       <div id="mittari-wrap">
@@ -21,7 +21,7 @@ function Mittari(props) {
   );
 }
 
-function Pyora(props) {
+const Pyora = (props) => {
   return (
     <div id="pyora" onClick={props.onClick}>
        <div id="pyora1"></div><div id="pyora2"></div>
@@ -30,7 +30,7 @@ function Pyora(props) {
   );
 }
 
-function Ritila(props) {
+const Ritila = (props) => {
   return (
     <div id="ritila" onClick={props.onClick}>
       <div className="palkki palkki2"></div>
@@ -142,8 +142,7 @@ palo(){
   let mittari = this.state.mittari;
   let uuni = this.state.uuni;
 
-
-console.log(window.screen.orientation);
+  //console.log(window.screen.orientation);
 
   kierros = kierros+1;
   this.setState({ kierros });
@@ -208,50 +207,28 @@ tuli(){
   let asteet = this.state.asteet;
   //console.log("tuli "+ lampo+" "+firecolors);
   
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
+  var getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
 
-if(lampo < 3){
-  vari_ind = 0;
-}
+  if(lampo < 3){
+    vari_ind = 0;
+  }
 
-if(lampo > 2 && lampo < 7){
-  vari_ind = 1;
-}
-if(lampo > 6){
-  vari_ind = 2;
-}
+  if(lampo > 2 && lampo < 7){
+    vari_ind = 1;
+  }
+  if(lampo > 6){
+    vari_ind = 2;
+  }
 
 asteet = asteet+vari_ind*getRandomInt(4);
 mittari.style.transform = 'rotate('+asteet+'deg)';
 
-function fireColor(){
-  return firecolors[vari_ind][getRandomInt(2)];
-}
-
 [].forEach.call(palkit, function(palkki) {
-  palkki.style.backgroundColor  = fireColor();
+  palkki.style.backgroundColor  = firecolors[vari_ind][getRandomInt(2)];
 });
 
 } // tuli
 
-/*handleChange() {
-  var self = this;          // Store `this` component outside the callback
-
-  console.log("orient "+self.state.orientation);
-
-  if ('onorientationchange' in window) {
-      window.addEventListener("orientationchange", function() {
-          // `this` is now pointing to `window`, not the component. So use `self`.
-          self.setState({   
-              orientation: !self.state.orientation
-          })
-          console.log("onorientationchange");
-      }, false);
-  }
-}*/
-  
 
 componentDidMount() {
   let palkit = this.state.palkit;
@@ -278,10 +255,9 @@ componentDidMount() {
       uuni.style.width  = '300px';
     }
 
-    console.log("yeahyeah");
+    console.log("orientationchange");
   }
 
-  //this.handleChange.bind(this);
 }
 
   render() {
