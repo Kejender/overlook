@@ -207,8 +207,8 @@ tuli(){
   let asteet = this.state.asteet;
   //console.log("tuli "+ lampo+" "+firecolors);
   
-  var getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
-
+  const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
+ 
   if(lampo < 3){
     vari_ind = 0;
   }
@@ -223,8 +223,8 @@ tuli(){
 asteet = asteet+vari_ind*getRandomInt(4);
 mittari.style.transform = 'rotate('+asteet+'deg)';
 
-[].forEach.call(palkit, function(palkki) {
-  palkki.style.backgroundColor  = firecolors[vari_ind][getRandomInt(2)];
+[...palkit].forEach((palkki) => {
+  palkki.style.backgroundColor = firecolors[vari_ind][getRandomInt(2)];
 });
 
 } // tuli
@@ -244,33 +244,29 @@ componentDidMount() {
   this.intervalId2 = setInterval(this.palo.bind(this), 10000);
 
   if ((window.screen.orientation.type === "landscape-primary") && window.screen.width > 599 && window.screen.height < 599){
-    console.log("ISO");
+    console.log("ISO "+window.screen.width+" "+window.screen.height);
     uuni.style.width  = '600px';
   }
   else{
-    console.log("PIENI");
+    console.log("PIENI "+window.screen.width+" "+window.screen.height);
+    uuni.style.width  = '300px';
   }
 
   alert(window.screen.height);
 
-  window.screen.orientation.onchange = function(e) {
-  
-    if (window.screen.orientation.type === "landscape-primary" && window.screen.width > 599 && window.screen.height < 599){
+  window.screen.orientation.onchange = () => {
+    if (window.screen.orientation.type === "landscape-primary" && window.screen.width > 599 && window.screen.height < 599) {
       console.log("land");
-      uuni.style.width  = '600px';
+      uuni.style.width = '600px';
     }
-
-    if (window.screen.orientation.type === "portrait-primary"){
+    if (window.screen.orientation.type === "portrait-primary") {
       console.log("port");
-      uuni.style.width  = '300px';
+      uuni.style.width = '300px';
     }
-
     console.log("orientationchange");
-
-    console.log("WH "+window.screen.width+" "+window.screen.height);
+    console.log("WH " + window.screen.width + " " + window.screen.height);
     alert(window.screen.height);
   }
-
 }
 
   render() {
