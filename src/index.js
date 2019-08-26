@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+// Lämpömittari
 const Mittari = (props) => {
   return (
     <div id="wrap">
@@ -21,6 +22,7 @@ const Mittari = (props) => {
   );
 }
 
+// Paineventtiili
 const Pyora = (props) => {
   return (
     <div id="pyora" onClick={props.onClick}>
@@ -30,6 +32,7 @@ const Pyora = (props) => {
   );
 }
 
+// Uunin ritilä
 const Ritila = (props) => {
   return (
     <div id="ritila" onClick={props.onClick}>
@@ -68,6 +71,7 @@ class Uuni extends React.Component {
     };
   }
 
+  // Läsää hiiltä, click-event ritilälle
   lisaa(){
     let hiili = this.state.hiili;
     let asteet = this.state.asteet;
@@ -252,7 +256,7 @@ componentDidMount() {
     uuni.style.width  = '300px';
   }
 
-  alert(window.screen.height);
+  //alert(window.screen.height);
 
   window.screen.orientation.onchange = () => {
     if (window.screen.orientation.type === "landscape-primary" && window.screen.width > 599 && window.screen.height < 599) {
@@ -265,7 +269,7 @@ componentDidMount() {
     }
     console.log("orientationchange");
     console.log("WH " + window.screen.width + " " + window.screen.height);
-    alert(window.screen.height);
+    //alert(window.screen.height);
   }
 }
 
