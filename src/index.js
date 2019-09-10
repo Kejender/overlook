@@ -261,9 +261,9 @@ componentDidMount() {
   //window.addEventListener("deviceorientation", handleOrientation, true);
   var mediaQueryList = window.matchMedia("(orientation: portrait)");
 
+  //if ((window.screen.orientation.type === "landscape-primary") && window.screen.width > 599 && window.screen.height < 599){
 
-
-  if ((window.screen.orientation.type === "landscape-primary") && window.screen.width > 599 && window.screen.height < 599){
+  if (mediaQueryList.matches && window.screen.width > 599 && window.screen.height < 599){
     console.log("ISO "+window.screen.width+" "+window.screen.height);
     uuni.style.width  = '600px';
   }
