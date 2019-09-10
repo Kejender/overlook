@@ -246,6 +246,22 @@ componentDidMount() {
   this.setState({ uuni });
   this.intervalId1 = setInterval(this.tuli.bind(this), 300);
   this.intervalId2 = setInterval(this.palo.bind(this), 10000);
+  
+  function handleOrientation(event){
+
+    console.log("CHANGE");
+    var absolute = event.absolute;
+    var alpha = event.alpha;
+    var beta = event.beta;
+    var gamma = event.gamma;
+
+    console.log(absolute+" "+alpha+" "+beta+" "+gamma);
+  }
+
+  //window.addEventListener("deviceorientation", handleOrientation, true);
+  var mediaQueryList = window.matchMedia("(orientation: portrait)");
+
+
 
   if ((window.screen.orientation.type === "landscape-primary") && window.screen.width > 599 && window.screen.height < 599){
     console.log("ISO "+window.screen.width+" "+window.screen.height);
@@ -258,7 +274,28 @@ componentDidMount() {
 
   //alert(window.screen.height);
 
-  window.screen.orientation.onchange = () => {
+  var mediaQueryList = window.matchMedia("(orientation: portrait)");
+  mediaQueryList.addListener(handleOrientationChange);
+
+function handleOrientationChange(mediaQueryList){
+
+  console.log("MQL"+mediaQueryList);
+
+  if (mediaQueryList.matches) {
+    console.log("PORT");
+    uuni.style.width = '300px';
+  }
+  else
+  if (window.screen.width > 599 && window.screen.height < 599) {
+    console.log("LAND");
+    uuni.style.width = '600px';
+  }
+}
+
+
+  /*window.screen.orientation.onchange = () => {
+    
+
     if (window.screen.orientation.type === "landscape-primary" && window.screen.width > 599 && window.screen.height < 599) {
       console.log("land");
       uuni.style.width = '600px';
@@ -269,8 +306,8 @@ componentDidMount() {
     }
     console.log("orientationchange");
     console.log("WH " + window.screen.width + " " + window.screen.height);
-    //alert(window.screen.height);
-  }
+    alert(window.screen.height);
+  }*/
 }
 
   render() {
