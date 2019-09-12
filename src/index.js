@@ -146,7 +146,7 @@ palo(){
   let mittari = this.state.mittari;
   let uuni = this.state.uuni;
 
-  console.log(window.screen.orientation);
+  //console.log(window.screen.orientation);
 
   kierros = kierros+1;
   this.setState({ kierros });
@@ -233,7 +233,6 @@ mittari.style.transform = 'rotate('+asteet+'deg)';
 
 } // tuli
 
-
 componentDidMount() {
   let palkit = this.state.palkit;
   let mittari = this.state.mittari;
@@ -247,41 +246,41 @@ componentDidMount() {
   this.intervalId1 = setInterval(this.tuli.bind(this), 300);
   this.intervalId2 = setInterval(this.palo.bind(this), 10000);
   
-  function handleOrientation(event){
+  var mediaQueryPort = window.matchMedia("(orientation: portrait)");
+  var mediaQueryLand = window.matchMedia("(orientation: landscape)");
+  var mediaQueryHeight = window.matchMedia('(min-height: 500px)');
 
-    console.log("CHANGE");
-    var absolute = event.absolute;
-    var alpha = event.alpha;
-    var beta = event.beta;
-    var gamma = event.gamma;
-
-    console.log(absolute+" "+alpha+" "+beta+" "+gamma);
-  }
-
-  //window.addEventListener("deviceorientation", handleOrientation, true);
-  var mediaQueryList = window.matchMedia("(orientation: portrait)");
-
-  //if ((window.screen.orientation.type === "landscape-primary") && window.screen.width > 599 && window.screen.height < 599){
-
-  if (mediaQueryList.matches && window.screen.width > 599 && window.screen.height < 599){
-    console.log("ISO "+window.screen.width+" "+window.screen.height);
-    uuni.style.width  = '600px';
-  }
-  else{
-    console.log("PIENI "+window.screen.width+" "+window.screen.height);
+  if (mediaQueryPort.matches){
+    console.log("PORT "+window.screen.width+" "+window.screen.height);
     uuni.style.width  = '300px';
   }
 
-  //alert(window.screen.height);
+  if (mediaQueryLand.matches && window.screen.width > 599 && window.screen.height < 599){
+    console.log("SMALLLANDSCAPE "+window.screen.width+" "+window.screen.height);
+    uuni.style.width  = '600px';
+  }
 
-  var mediaQueryList = window.matchMedia("(orientation: portrait)");
-  mediaQueryList.addListener(handleOrientationChange);
+  if (mediaQueryLand.matches && window.screen.width > 599 && window.screen.height > 599){
+    console.log("BIGLANDSCAPE "+window.screen.width+" "+window.screen.height);
+    uuni.style.width  = '300px';
+  }
 
-function handleOrientationChange(mediaQueryList){
 
-  console.log("MQL"+mediaQueryList);
+  const handleOrientationChangeLand = (mediaQueryLand) => {
 
-  if (mediaQueryList.matches) {
+    if (mediaQueryLand.matches && window.screen.width > 599 && window.screen.height < 599){
+      console.log("LANDLAND "+window.screen.width+" "+window.screen.height);
+      uuni.style.width  = '600px';
+    }
+    console.log("MQL"+mediaQueryPort);
+  }
+
+  
+const handleOrientationChange = (mediaQueryPort) => {
+
+  console.log("MQL"+mediaQueryPort);
+
+  if (mediaQueryPort.matches) {
     console.log("PORT");
     uuni.style.width = '300px';
   }
@@ -292,23 +291,23 @@ function handleOrientationChange(mediaQueryList){
   }
 }
 
+const handleHeight = (mediaQueryHeight) => {
 
-  /*window.screen.orientation.onchange = () => {
-    
-
-    if (window.screen.orientation.type === "landscape-primary" && window.screen.width > 599 && window.screen.height < 599) {
-      console.log("land");
-      uuni.style.width = '600px';
-    }
-    if (window.screen.orientation.type === "portrait-primary") {
-      console.log("port");
-      uuni.style.width = '300px';
-    }
-    console.log("orientationchange");
-    console.log("WH " + window.screen.width + " " + window.screen.height);
-    alert(window.screen.height);
-  }*/
+  if (mediaQueryHeight.matches){
+    uuni.style.width = '300px';
+    console.log("MQLHEIGHT");
+  }
+  else {
+    uuni.style.width = '600px';
+  }
+  
 }
+
+mediaQueryPort.addListener(handleOrientationChange);
+mediaQueryLand.addListener(handleOrientationChangeLand);
+mediaQueryHeight.addListener(handleHeight);
+
+} // componentdidmount
 
   render() {
     return (
