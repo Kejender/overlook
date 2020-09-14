@@ -61,6 +61,7 @@ class Uuni extends React.Component {
     asteet: 45,
     uuni: null,
     palkit: null,
+    pyora: null,
     mittari: null,
     vari_ind: 1,
     firecolors: [
@@ -88,6 +89,10 @@ class Uuni extends React.Component {
 
   vahenna(){
     let paine = this.state.paine;
+    let pyora = this.state.pyora;
+
+    pyora.style.transform = 'rotate(30deg)';
+
     console.log("vahenna");
     if (paine > 0){
         paine = paine - 1;
@@ -236,12 +241,15 @@ mittari.style.transform = 'rotate('+asteet+'deg)';
 componentDidMount() {
   let palkit = this.state.palkit;
   let mittari = this.state.mittari;
+  let pyora = this.state.pyora;
   let uuni = this.state.uuni;
   palkit = document.getElementsByClassName('palkki');
   mittari = document.getElementById('mittari');
+  pyora = document.getElementById('pyora');
   uuni = document.getElementById('uuni');
   this.setState({ palkit });
   this.setState({ mittari });
+  this.setState({ pyora });
   this.setState({ uuni });
   this.intervalId1 = setInterval(this.tuli.bind(this), 300);
   this.intervalId2 = setInterval(this.palo.bind(this), 10000);
