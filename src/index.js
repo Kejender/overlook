@@ -91,7 +91,7 @@ class Uuni extends React.Component {
     let paine = this.state.paine;
     let pyora = this.state.pyora;
 
-    pyora.style.transform = 'rotate(45deg)';
+    //pyora.style.transform = 'rotate(45deg)';
 
     console.log("vahenna");
     if (paine > 0){
