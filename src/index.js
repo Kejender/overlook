@@ -25,7 +25,7 @@ const Mittari = (props) => {
 // Paineventtiili
 const Pyora = (props) => {
   return (
-    <div id="pyora" onClick={props.onClick} ontouchstart="">
+    <div id="pyora" onClick={props.onClick} ontouchstart="" style="-webkit-transform: rotate(45deg);">
        <div id="pyora1"></div><div id="pyora2"></div>
        <div id="pyora3"></div><div id="pyora4"></div>
     </div>
