@@ -32,6 +32,45 @@ const Pyora = (props) => {
   );
 }
 
+const Rajahdysrivi = (props) => {
+  return (
+    <div className="rajahdysrivi">
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+    </div>
+  );
+}
+
+const Resetoi = (props) => {
+  return (
+    <div id="restart" onClick={props.onClick}>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"><h1>G</h1></div>
+        <div className="rajahdyspalkki"><h1>A</h1></div>
+        <div className="rajahdyspalkki"><h1>M</h1></div>
+        <div className="rajahdyspalkki"><h1>E</h1></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"><h1>O</h1></div>
+        <div className="rajahdyspalkki"><h1>V</h1></div>
+        <div className="rajahdyspalkki"><h1>E</h1></div>
+        <div className="rajahdyspalkki"><h1>R</h1></div>
+        <div className="rajahdyspalkki"></div>
+        <div className="rajahdyspalkki"></div>
+    </div>
+  );
+}
+
+
 // Uunin ritilä
 const Ritila = (props) => {
   return (
@@ -58,10 +97,11 @@ class Uuni extends React.Component {
     lampo: 4,
     hiili: 4,
     kierros: 0,
+    kriittinen: 0,
     asteet: 45,
     uuni: null,
     palkit: null,
-    pyora: null,
+    rajahdyspalkit: null,
     mittari: null,
     vari_ind: 1,
     firecolors: [
@@ -89,16 +129,40 @@ class Uuni extends React.Component {
 
   vahenna(){
     let paine = this.state.paine;
-    let pyora = this.state.pyora;
-
-    //pyora.style.transform = 'rotate(45deg)';
-
     console.log("vahenna");
     if (paine > 0){
         paine = paine - 1;
         this.setState({ paine });
         console.log("paine "+paine);
     }  
+  }
+
+  resetoi(){
+    let rajahdys = this.state.rajahdys;
+    let paine = this.state.paine;
+    let lampo = this.state.lampo;
+    let hiili = this.state.hiili;
+    let kierros = this.state.kierros;
+    let asteet = this.state.asteet;
+    let kriittinen = this.state.kriittinen;
+    
+    console.log("resetoi");
+    rajahdys.style.visibility  = 'hidden';
+    clearInterval(this.intervalId3);
+
+    paine = 4
+    lampo = 4
+    hiili = 4
+    kierros = 0
+    kriittinen = 0
+    asteet = 45
+
+    this.setState({ paine });
+    this.setState({ lampo });
+    this.setState({ hiili });
+    this.setState({ kierros });
+    this.setState({ kriittinen });
+    this.setState({ asteet }); 
   }
 
   renderPyora(i) {
@@ -124,15 +188,43 @@ class Uuni extends React.Component {
     );
   }
 
+  renderRestart(i) {
+    return (
+      <Resetoi
+      onClick={() => this.resetoi()}
+      />
+    );
+  }
+
+  renderRajahdysrivi(i) {
+    return (
+      <Rajahdysrivi/>
+    );
+  }
+
   renderUuni(i) {
     return (
-      <div id="uuni">
+      <div>
+      <div id="uuni" className={`${this.state.kriittinen > 0? 'kriittinen': 'sopiva'}`}>
         <div id="harvelit">
           {this.renderPyora(1)}
           {this.renderMittari(2)}
           <p id="chat"></p>
         </div>
         {this.renderRitila(2)}
+      </div>
+      <div id="rajahdys">
+      {this.renderRajahdysrivi(3)}
+      {this.renderRajahdysrivi(3)}
+      {this.renderRajahdysrivi(3)}
+      {this.renderRajahdysrivi(3)}
+      {this.renderRestart(3)}
+      {this.renderRajahdysrivi(3)}
+      {this.renderRajahdysrivi(3)}
+      {this.renderRajahdysrivi(3)}
+      {this.renderRajahdysrivi(3)}
+      
+      </div>
       </div>
     );
   }
@@ -145,11 +237,13 @@ class Uuni extends React.Component {
 palo(){
   let lampo = this.state.lampo;
   let kierros = this.state.kierros;
+  let kriittinen = this.state.kriittinen;
   let asteet = this.state.asteet;
   let paine = this.state.paine;
   let hiili = this.state.hiili;
   let mittari = this.state.mittari;
   let uuni = this.state.uuni;
+  let rajahdys = this.state.rajahdys;
 
   //console.log(window.screen.orientation);
 
@@ -185,25 +279,39 @@ palo(){
     if (paine < 10) {
       paine = paine + 1;
       console.log("paine: "+paine);
+      if (kriittinen > 0) {
+        kriittinen = kriittinen - 1;
+      }
     }
     else {
       console.log("liikaa");
+      kriittinen = kriittinen + 1;
+      console.log("krii "+kriittinen)
+
     }
     uuni.style.backgroundColor  = 'red';
   }
   else{
     uuni.style.backgroundColor  = 'grey';
   }
-    
+  
   if (hiili > 0) {
     hiili = hiili - 1;
     console.log("hiili: "+hiili);
   }
     
   this.setState({ hiili });
+  this.setState({ kriittinen });
   this.setState({ paine });
   this.setState({ asteet });
   this.setState({ lampo });
+
+  if (kriittinen > 5) {
+    console.log("pam");
+    this.intervalId3 = setInterval(this.rajahdys.bind(this), 150);
+    rajahdys.style.visibility  = 'visible';
+  }
+
 
 } //palo
 
@@ -238,21 +346,43 @@ mittari.style.transform = 'rotate('+asteet+'deg)';
 
 } // tuli
 
+rajahdys(){
+  const firecolors = this.state.firecolors;
+  let vari_ind = this.state.vari_ind;
+  let rajahdyspalkit = this.state.rajahdyspalkit;
+  /*let mittari = this.state.mittari;
+  let asteet = this.state.asteet;*/
+  //console.log("tuli "+ lampo+" "+firecolors);
+  
+  const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
+ 
+  vari_ind = 1;
+
+[...rajahdyspalkit].forEach((palkki) => {
+  palkki.style.backgroundColor = firecolors[vari_ind][getRandomInt(2)];
+});
+
+} // tuli
+
 componentDidMount() {
   let palkit = this.state.palkit;
+  let rajahdyspalkit = this.state.rajahdyspalkit;
+  let rajahdys = this.state.rajahdys;
   let mittari = this.state.mittari;
-  let pyora = this.state.pyora;
   let uuni = this.state.uuni;
   palkit = document.getElementsByClassName('palkki');
+  rajahdys = document.getElementById('rajahdys');
+  rajahdyspalkit = document.getElementsByClassName('rajahdyspalkki');
   mittari = document.getElementById('mittari');
-  pyora = document.getElementById('pyora');
   uuni = document.getElementById('uuni');
   this.setState({ palkit });
+  this.setState({ rajahdyspalkit });
+  this.setState({ rajahdys });
   this.setState({ mittari });
-  this.setState({ pyora });
   this.setState({ uuni });
   this.intervalId1 = setInterval(this.tuli.bind(this), 300);
   this.intervalId2 = setInterval(this.palo.bind(this), 10000);
+  //this.intervalId3 = setInterval(this.rajahdys.bind(this), 150);
   
   var mediaQueryPort = window.matchMedia("(orientation: portrait)");
   var mediaQueryLand = window.matchMedia("(orientation: landscape)");
