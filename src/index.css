@@ -217,23 +217,16 @@ margin-right: 20px;
   
 #viisari{border: 3px solid black; width: 50px;}
 
-#uuni{border: 2px solid black; 
+#uuni{border: 2px solid black;
   position: absolute;
-  //width: 300px;
   width: 50%;
   overflow: auto;
-  //height: auto;
-  //height: 400px;
   min-width: 300px;
-  background: grey; padding: 20px; border-radius: 10px; transition: all 0.5s ease-in-out;}
+  background: grey; padding: 20px; border-radius: 10px; transition: all 0.5s ease-in-out;
+}
 
 #uuni-kylma{border: 2px solid black; width: 300px; height: 400px; background: black; padding: 20px; border-radius: 10px;}
 #uuni1{width: 148px; height: 198px; background: orange; border-radius: 16px; margin: 1px;}
-
-#ritila3{border: 20px solid black; background: yellow; width: 260px; height: 120px; 
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-}
 
 #ritila{
   border: 20px solid black; 
@@ -244,6 +237,13 @@ grid-template-columns: repeat(4, 1fr);
   position: relative; 
   float: left;
   grid-template-columns: repeat(4, 1fr);
+}
+
+#ritila:active {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
 }
 
 .palkki2{
@@ -269,14 +269,20 @@ grid-template-columns: repeat(4, 1fr);
   z-index: 5;
   overflow: auto;
   /*display: grid;*/
-  position: absolute; 
-  float: left;
+  position: absolute;
+  /*float: left;*/
   /*grid-template-columns: repeat(8, 1fr);*/
-  //height: auto;
-  //height: 400px;
-  min-width: 260px;
-  background: gray;
+  min-width: 340px;
+  background: yellow;
   /*opacity: 70%;*/
+}
+
+#uunix{border: 2px solid black;
+  position: absolute;
+  width: 50%;
+  overflow: auto;
+  min-width: 300px;
+  background: grey; padding: 20px; border-radius: 10px; transition: all 0.5s ease-in-out;
 }
 
 .rajahdysrivi{

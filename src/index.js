@@ -145,7 +145,7 @@ class Uuni extends React.Component {
     let kierros = this.state.kierros;
     let asteet = this.state.asteet;
     let kriittinen = this.state.kriittinen;
-    
+
     console.log("resetoi");
     rajahdys.style.visibility  = 'hidden';
     clearInterval(this.intervalId3);
@@ -391,6 +391,7 @@ componentDidMount() {
   if (mediaQueryPort.matches){
     console.log("PORT "+window.screen.width+" "+window.screen.height);
     uuni.style.width  = '300px';
+    rajahdys.style.width  = '340px';
   }
 
   if (mediaQueryLand.matches && window.screen.width > 599 && window.screen.height < 599){
@@ -401,6 +402,7 @@ componentDidMount() {
   if (mediaQueryLand.matches && window.screen.width > 599 && window.screen.height > 599){
     console.log("BIGLANDSCAPE "+window.screen.width+" "+window.screen.height);
     uuni.style.width  = '300px';
+    rajahdys.style.width  = '340px';
   }
 
 
@@ -409,6 +411,7 @@ componentDidMount() {
     if (mediaQueryLand.matches && window.screen.width > 599 && window.screen.height < 599){
       console.log("LANDLAND "+window.screen.width+" "+window.screen.height);
       uuni.style.width  = '600px';
+      rajahdys.style.width  = '600px';
     }
     console.log("MQL"+mediaQueryPort);
   }
@@ -421,11 +424,13 @@ const handleOrientationChange = (mediaQueryPort) => {
   if (mediaQueryPort.matches) {
     console.log("PORT");
     uuni.style.width = '300px';
+    rajahdys.style.width = '340px';
   }
   else
   if (window.screen.width > 599 && window.screen.height < 599) {
     console.log("LAND");
     uuni.style.width = '600px';
+    rajahdys.style.width = '600px';
   }
 }
 
@@ -433,10 +438,12 @@ const handleHeight = (mediaQueryHeight) => {
 
   if (mediaQueryHeight.matches){
     uuni.style.width = '300px';
+    rajahdys.style.width = '340px';
     console.log("MQLHEIGHT");
   }
   else {
     uuni.style.width = '600px';
+    rajahdys.style.width = '600px';
   }
   
 }
