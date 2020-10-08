@@ -1,6 +1,5 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
-  //margin: 10px;
 }
 
 ol, ul {
@@ -39,11 +38,10 @@ h1 {
   grid-column: 2 / 2;
   grid-row: 1/1;
   z-index: 4;
-  //border-style: solid;
-  //background: grey;
-  //border-width: 5px 5px 0px 0px; 
-  width: 45px; height: 45px; 
-  border-radius: 0px 50px 0px 0px;}
+  width: 45px; 
+  height: 45px; 
+  border-radius: 0px 50px 0px 0px;
+}
   
 #viisari3{
   grid-column: 1 / 2;
@@ -51,22 +49,36 @@ h1 {
   z-index: 4;
   border-style: solid; 
   border-width: 0px 0px 0px 0px; 
-  width: 45px; height: 45px; 
-  border-radius: 0px 0px 0px 50px;}
+  width: 45px; 
+  height: 45px; 
+  border-radius: 0px 0px 0px 50px;
+}
 
 #viisari4{
   grid-column: 2 / 2;
   grid-row: 2/2;
   z-index: 4;
-  //border-style: solid; 
-  //border-width: 0px 5px 5px 0px; 
-  width: 45px; height: 45px; 
-  border-radius: 0px 0px 50px 0px;}
+  width: 45px; 
+  height: 45px; 
+  border-radius: 0px 0px 50px 0px;
+}
 
 #wrap{
-  //position: absolute;
   width: 110px; height: 110px;
   grid-column: 3 / 3;
+}
+
+#mittari{
+  z-index: 3;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 10px;
+  grid-column: 3 / 3;
+  display: grid;
+  transform: rotate(45deg);
+  transition: all 0.5s ease-in-out;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100px; height: 100px; border-radius: 55px;
 }
 
 #mittari-wrap{
@@ -88,10 +100,9 @@ h1 {
   display: grid;
   transform: rotate(100deg);
   transition: all 0.5s ease-in-out;
-  width: 105px; height: 105px; border-radius: 55px;
-  //border-style: solid;
-  //border-width: 5px;
-  //background: white;
+  width: 105px; 
+  height: 105px; 
+  border-radius: 55px;
 }
 
 #nuppi{
@@ -99,7 +110,9 @@ h1 {
   z-index: 3;
   margin-top: 38px;
   margin-left: 42px;
-  width: 12px; height: 12px; border-radius: 12px;
+  width: 12px; 
+  height: 12px; 
+  border-radius: 12px;
   border-style: solid;
   border-width: 5px;
   background: black;
@@ -129,51 +142,7 @@ h1 {
   border-width: 30px 0px 0px 0px; 
   border-radius: 50px 0px 0px 0px;
   border-color: red;
-  //background: pink;
 }
-
-#tausta2{
-  z-index: 4;
-  grid-column: 2 / 2;
-  grid-row: 1/1;
-  width: 55px; height: 55px; 
-  //border-style: solid;
-  //border-width: 5px 5px 0px 0px; 
-  border-radius: 0px 55px 0px 0px;
-  background: grey;
-}
-
-#tausta3{
-grid-column: 1 / 2;
-grid-row: 2/2;
-z-index: 4;
-border-style: solid; 
-border-width: 0px 0px 5px 5px; 
-width: 50px; height: 50px; 
-border-radius: 0px 0px 0px 50px;}
-  
-#tausta4{
-  grid-column: 2 / 2;
-  grid-row: 2/2;
-  z-index: 4;
-  //border-style: solid; 
-  //border-width: 0px 5px 5px 0px; width: 50px; height: 50px; 
-  border-radius: 0px 0px 55px 0px;}
-
-#mittari{
-  z-index: 3;
-  position: absolute;
-  margin-top: 10px;
-  margin-left: 10px;
-  grid-column: 3 / 3;
-  display: grid;
-  transform: rotate(45deg);
-  transition: all 0.5s ease-in-out;
-  grid-template-columns: repeat(2, 1fr);
-  width: 100px; height: 100px; border-radius: 55px;
-  //border-style: solid;
-  //border-width: 7px;
-  //background: white;}
 
 #harvelit{
 display: grid;
@@ -182,13 +151,11 @@ grid-template-columns: repeat(3, 1fr);
 height: 240px;
 width: 280px;
 margin-right: 20px;
-//opacity: 0.5;
 }
 
 #pyora{
   grid-column: 1 / 2;
   display: grid;
-  //transform: rotate(45deg);
   grid-template-columns: repeat(2, 1fr);
   width: 102px; height: 102px; border-radius: 50px;}
 
@@ -329,4 +296,52 @@ margin-right: 20px;
   80% { transform: translate(-1px, -1px) rotate(1deg); }
   90% { transform: translate(1px, 2px) rotate(0deg); }
   100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.kriittinen {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
+}
+
+#chat1 {
+  /*opacity: 1;*/
+  z-index: 3;
+  position: relative;
+  left: 30px;
+  /*margin-left: auto;*/
+}
+#chat2 {
+  /*opacity: 1;*/
+  z-index: 4;
+  position: relative;
+  left: -30px;
+  /*margin-right: auto;*/
+}
+
+.pois {
+  opacity: 0;
+  /*animation: fadeoutchat 4s;
+  animation-iteration-count: 1;*/
+
+}
+
+.paalla {
+  opacity: 1;
+  animation: fadeinchat 4s;
+  /*animation-direction: alternate;*/
+  animation-iteration-count: 1;
+}
+
+@keyframes fadeoutchat {
+  0% { opacity: 1; }
+  /*50% { opacity: 0; }*/
+  100% { opacity: 0; }
+}
+
+@keyframes fadeinchat {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

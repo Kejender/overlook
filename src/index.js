@@ -102,6 +102,14 @@ class Uuni extends React.Component {
     uuni: null,
     palkit: null,
     rajahdyspalkit: null,
+    chat: false,
+    message1: "...",
+    message2: "Hi...",
+    saa: [],
+    saa_nyt: ["Now here in Boulder, Colorado there is..."],
+    saa_myoh: ["Later there will be..."],
+    saa_huom: ["Tomorrow it will be..."],
+    saa_ind: 0,
     mittari: null,
     vari_ind: 1,
     firecolors: [
@@ -111,6 +119,76 @@ class Uuni extends React.Component {
       ],
     };
   }
+
+async getWeather(){
+
+  let saa = this.state.saa;
+  let saa_nyt = this.state.saa_nyt;
+
+  const getWeatherFromApi = async (geodata) => {
+
+    const appId = process.env.APPID || 'a3ab4029f49f1344f0cbb6ed38c7c742';
+    const mapURI = process.env.MAP_ENDPOINT || "http://api.openweathermap.org/data/2.5";
+    //const targetCity = process.env.TARGET_CITY || "Helsinki,fi";
+
+    try {
+      const endpoint = `${mapURI}/weather?q=Boulder,us&appid=${appId}&`;
+      //const response = await fetch(`${baseURL}/weather?lat=${geodata.lat}&lon=${geodata.lon}`);
+      const response = await fetch(endpoint);
+      return response.json();
+    } catch (error) {
+      console.error(error);
+    }
+  
+    return {};
+  };
+
+  const weather = await getWeatherFromApi();
+  console.log("w "+weather.weather[0].description);
+  saa_nyt.push(weather.weather[0].description);
+  saa.push(saa_nyt);
+  this.setState( {saa} );
+
+}
+
+//"lon":-105.35,"lat":40.08}
+
+async getForecast(){
+
+  let saa = this.state.saa;
+  let saa_myoh = this.state.saa_myoh;
+  let saa_huom = this.state.saa_huom;
+
+  const getForecastFromApi = async (geodata) => {
+
+    const appId = process.env.APPID || 'a3ab4029f49f1344f0cbb6ed38c7c742';
+    const mapURI = process.env.MAP_ENDPOINT || "http://api.openweathermap.org/data/2.5";
+
+    try {
+      const endpoint = `${mapURI}/forecast?q=Boulder,us&appid=${appId}&`;
+      //const response = await fetch(`${baseURL}/weather?lat=${geodata.lat}&lon=${geodata.lon}`);
+      const response = await fetch(endpoint);
+      return response.json();
+    } catch (error) {
+      console.error(error);
+    }
+  
+    return {};
+  };
+
+  const weather = await getForecastFromApi();
+  console.log("w "+weather.list[0].weather[0].description);
+  console.log("w "+weather.list[24].weather[0].description);
+
+  saa_myoh.push(weather.list[0].weather[0].description);
+  saa_huom.push(weather.list[24].weather[0].description);
+
+  saa.push(saa_myoh);
+  saa.push(saa_huom);
+
+  this.setState( {saa} );
+
+}
 
   // Läsää hiiltä, click-event ritilälle
   lisaa(){
@@ -135,6 +213,71 @@ class Uuni extends React.Component {
         this.setState({ paine });
         console.log("paine "+paine);
     }  
+  }
+
+  puhe2(event){
+      event.stopPropagation();
+      console.log("puhe");
+  }
+
+
+
+  puhe_reset(){
+    
+    let chat = this.state.chat;
+    let saa_ind = this.state.saa_ind;
+  
+    saa_ind = 0;
+    chat = false;
+    this.setState({saa_ind});
+    this.setState({chat});
+
+  }
+
+
+  puhe(){
+    
+    let chat = this.state.chat;
+    let message1 = this.state.message1;
+    let message2 = this.state.message2;
+    let saa = this.state.saa;
+    let saa_ind = this.state.saa_ind;
+
+    if (chat) {
+
+      if (saa_ind < saa.length) {
+        console.log(saa_ind);
+
+        let temp_msg = saa[saa_ind];
+        console.log(temp_msg);
+
+        message1 = temp_msg[0];
+        message2 = temp_msg[1];
+
+        /*message1 = saa[saa_ind][0];
+        message2 = saa[saa_ind][1];*/
+
+        saa_ind = saa_ind +1;
+
+      }
+      else{
+        message1 = "yeah";
+      }
+
+
+      console.log(saa);
+
+      chat = false;
+      //message1 = "yeah";
+      this.setState({ message1 });
+      this.setState({ message2 });
+    }
+    else {
+      chat = true;
+    }
+    this.setState({ chat });
+    this.setState({ saa_ind });
+
   }
 
   resetoi(){
@@ -206,10 +349,11 @@ class Uuni extends React.Component {
     return (
       <div>
       <div id="uuni" className={`${this.state.kriittinen > 0? 'kriittinen': 'sopiva'}`}>
-        <div id="harvelit">
+        <div id="harvelit" onClick={() => this.puhe_reset()}>
           {this.renderPyora(1)}
           {this.renderMittari(2)}
-          <p id="chat"></p>
+          <p id="chat1" className={`${this.state.chat? 'pois': 'paalla'}`}>{this.state.message1}</p>
+          <p id="chat2" className={`${this.state.chat? 'paalla': 'pois'}`}>{this.state.message2}</p>
         </div>
         {this.renderRitila(2)}
       </div>
@@ -276,7 +420,7 @@ palo(){
     
   if (lampo > 5){
     
-    if (paine < 10) {
+    if (paine < 8) {
       paine = paine + 1;
       console.log("paine: "+paine);
       if (kriittinen > 0) {
@@ -306,12 +450,11 @@ palo(){
   this.setState({ asteet });
   this.setState({ lampo });
 
-  if (kriittinen > 5) {
+  if (kriittinen > 4) {
     console.log("pam");
     this.intervalId3 = setInterval(this.rajahdys.bind(this), 150);
     rajahdys.style.visibility  = 'visible';
   }
-
 
 } //palo
 
@@ -350,19 +493,15 @@ rajahdys(){
   const firecolors = this.state.firecolors;
   let vari_ind = this.state.vari_ind;
   let rajahdyspalkit = this.state.rajahdyspalkit;
-  /*let mittari = this.state.mittari;
-  let asteet = this.state.asteet;*/
-  //console.log("tuli "+ lampo+" "+firecolors);
   
   const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
- 
   vari_ind = 1;
 
 [...rajahdyspalkit].forEach((palkki) => {
   palkki.style.backgroundColor = firecolors[vari_ind][getRandomInt(2)];
 });
 
-} // tuli
+} // rajahdys
 
 componentDidMount() {
   let palkit = this.state.palkit;
@@ -383,6 +522,7 @@ componentDidMount() {
   this.intervalId1 = setInterval(this.tuli.bind(this), 300);
   this.intervalId2 = setInterval(this.palo.bind(this), 10000);
   //this.intervalId3 = setInterval(this.rajahdys.bind(this), 150);
+  this.chatInterval = setInterval(this.puhe.bind(this), 8000);
   
   var mediaQueryPort = window.matchMedia("(orientation: portrait)");
   var mediaQueryLand = window.matchMedia("(orientation: landscape)");
@@ -404,7 +544,6 @@ componentDidMount() {
     uuni.style.width  = '300px';
     rajahdys.style.width  = '340px';
   }
-
 
   const handleOrientationChangeLand = (mediaQueryLand) => {
 
@@ -451,6 +590,9 @@ const handleHeight = (mediaQueryHeight) => {
 mediaQueryPort.addListener(handleOrientationChange);
 mediaQueryLand.addListener(handleOrientationChangeLand);
 mediaQueryHeight.addListener(handleHeight);
+
+this.getWeather()
+this.getForecast()
 
 } // componentdidmount
 
