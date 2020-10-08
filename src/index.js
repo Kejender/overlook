@@ -162,7 +162,7 @@ async getForecast(){
   const getForecastFromApi = async (geodata) => {
 
     const appId = process.env.APPID || 'a3ab4029f49f1344f0cbb6ed38c7c742';
-    const mapURI = process.env.MAP_ENDPOINT || "http://api.openweathermap.org/data/2.5";
+    const mapURI = process.env.MAP_ENDPOINT || "https://api.openweathermap.org/data/2.5";
 
     try {
       const endpoint = `${mapURI}/forecast?q=Boulder,us&appid=${appId}&`;
